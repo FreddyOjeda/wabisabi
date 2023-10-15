@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    min-height: 100%;
+    height: fit-content;
+    background: linear-gradient(45deg, #fcf5be, #d988b1, #e4c1f9, #709fb3, #a9dcfb);
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+}
+
+body {
+    min-height: 100vh;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+  

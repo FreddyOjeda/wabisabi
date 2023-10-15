@@ -1,0 +1,13 @@
+<div class="container p-4"  *ngIf="product">
+    <div class="row text-center">
+        <h1 class="text-title"><strong>informacion</strong></h1>
+    </div>
+    <div class="row pb-2"><img src="{{product.imagen}}" alt="" class="img img-fluid"></div>
+    <div class="row pb-2"><p><strong>Descripcion:</strong> {{ product.descripcion }}</p></div>
+    <div class="row pb-2"><p><strong>Precio:</strong> {{ product.precio }}</p></div>
+    <div class="row text-center">
+        <div class="col-12">
+            <button class="btn btn-primary">Solicitar</button>
+        </div>
+    </div>
+</div>
