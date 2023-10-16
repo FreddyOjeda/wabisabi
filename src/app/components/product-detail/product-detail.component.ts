@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-//import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
@@ -7,16 +8,44 @@ import { Component, Inject, OnInit } from '@angular/core';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent {
-  list: any[] = [{ "id": 1, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/1.png" }, { "id": 2, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/2.png" }, { "id": 3, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/3.png" }, { "id": 4, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/4.png" }, { "id": 5, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/5.png" }, { "id": 6, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/6.png" }, { "id": 7, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/7.png" }, { "id": 8, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/8.png" }, { "id": 9, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/9.png" }, { "id": 10, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/10.png" }, { "id": 11, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/11.png" }, { "id": 12, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/12.png" }, { "id": 13, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/13.png" }, { "id": 14, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/14.png" }, { "id": 15, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/15.png" }, { "id": 16, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/16.png" }, { "id": 17, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/17.png" }, { "id": 18, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/18.png" }, { "id": 19, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/19.png" }, { "id": 20, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/20.png" }, { "id": 21, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/21.png" }, { "id": 22, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/22.png" }, { "id": 23, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/23.png" }, { "id": 24, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/24.png" }, { "id": 25, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/25.png" }, { "id": 26, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/26.png" }, { "id": 27, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/27.png" }, { "id": 28, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/28.png" }, { "id": 29, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/29.png" }, { "id": 30, "descripcion": "Hola", "precio": 20000, "imagen": "assets/images/products/30.png" }];
-  productId: number=0;
-  product : any
+  list: any[] = [];
+  product: any
+  @Input() productId: number = 0;
 
-  constructor() {
+  sesion: boolean = false
+
+  constructor(private http: HttpClient) {
+    this.sesion = localStorage.getItem('sesion') === 'true'
   }
 
   ngOnInit(): void {
-    /* this.product = this.list.find(product => product.id === this.data.id);
-    console.log('Datos recibidos en el diálogo:', this.data.id); */
+    this.http.get<any[]>('https://wabisabi-server-production.up.railway.app/archivos/productos/').subscribe(
+      (response) => {
+        this.list = response; // Almacena la lista de productos en la propiedad
+        this.product = this.list.find(product => product.id === this.productId);
+      },
+      (error) => {
+        console.error('Error al obtener productos:', error);
+      }
+    );
+  }
+  encodeText(text: string): string {
+    return encodeURIComponent(text);
   }
 
+  borrarProducto(productoId: number) {
+    const url = `https://wabisabi-server-production.up.railway.app/archivos/borrar-producto/${productoId}/`;
+    this.http
+      .delete(url)
+      .toPromise()
+      .then(() => {
+        Swal.fire("Eliminado...", "El producto ha sido eliminado correctamente", "success").then(() => {
+          window.location.reload();
+        });
+      })
+      .catch(error => {
+        Swal.fire("Error...", "Ocurrió un error al eliminar el producto", "error");
+      });
+
+  }
 }

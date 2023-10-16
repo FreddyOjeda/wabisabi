@@ -7,21 +7,17 @@
                 </path>
             </svg>
         </a>
-
         <a href="#" class="socialContainer containerTwo">
             <svg class="socialSvg twitterSvg" viewBox="0 0 16 16">
                 <path
                     d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z">
                 </path>
             </svg> </a>
+        <a href="https://www.facebook.com/profile.php?id=100069216763570" target="_blank"
+            class="socialContainer containerThree">
+            <i class="fa-brands fa-facebook socialSvg" style="color: #ffffff;"></i>
 
-        <!-- <a href="#" class="socialContainer containerThree">
-            <svg class="socialSvg facebookSvg" viewBox="0 0 16 16">
-                <path d="M12 0H4a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h4v-6H8V7a2 2 0 0 1 2-2h2V3a1 1 0 0 0-1-1z"/>
-            </svg>
-            
-        </a> -->
-
+        </a>
         <a href="https://api.whatsapp.com/send?phone=573053074733" target="_blank"
             class="socialContainer containerFour">
             <svg class="socialSvg whatsappSvg" viewBox="0 0 16 16">
@@ -30,23 +26,45 @@
                 </path>
             </svg>
         </a>
-
-        <a routerLink="/create-product" class="socialContainer containerFour">
-
-        </a>
-        <a [routerLink]="['/product',1]" class="socialContainer containerFour">
-
-        </a>
+        <button (click)="cerrarSesion()" class="socialContainer containerFive" *ngIf="sesion">
+            <i class="fa-solid fa-user socialSvg" style="color: #ffffff;"></i>
+        </button>
+        <button (click)="openDialog2()" class="socialContainer containerFive" *ngIf="!sesion">
+            <i class="fa-solid fa-user socialSvg" style="color: #ffffff;"></i>
+        </button>
+        <button (click)="openDialog3()" class="socialContainer containerSix" *ngIf="sesion">
+            <i class="fa-solid fa-plus socialSvg" style="color: #ffffff;"></i>
+        </button>
     </div>
 
 </div>
 <div class="container">
+    <div class="visibleMobile">
+        <div class="row row-main mt-4 p-1">
+            <div class="col-3">
+                <img src="../../../assets/images/logos/photo_2023-10-14_16-50-25.jpg" alt=""
+                    class="img img-fluid rounded">
+            </div>
+            <div class="col-9">
+                <div class="menu">
+                    <a class="nav-link" aria-current="page" href="https://www.instagram.com/wabi.sabi806/"target="_blank"><i class="fa-brands fa-square-instagram fa-2xl" style="color: #d62976;"></i></a>
+                    <a class="nav-link" href="#"><i class="fa-brands fa-square-twitter fa-2xl" style="color: #00acee;"></i></a>
+                    <a class="nav-link" href="https://www.facebook.com/profile.php?id=100069216763570" target="_blank"><i class="fa-brands fa-square-facebook fa-2xl" style="color: #0072b1;"></i></a>
+                    <a class="nav-link" href="https://api.whatsapp.com/send?phone=573053074733" target="_blank"><i class="fa-brands fa-square-whatsapp fa-2xl" style="color: #51cb5f;"></i></a>
+                    <a class="nav-link" (click)="openDialog2()" *ngIf="!sesion"><i class="fa-solid fa-user fa-xl" style="color: #000000;"></i></a>
+                    <a class="nav-link" (click)="cerrarSesion()" *ngIf="sesion"><i class="fa-solid fa-user fa-xl" style="color: #000000;"></i></a>
+                    <a class="nav-link" (click)="openDialog3()" *ngIf="sesion"><i class="fa-solid fa-plus fa-xl" style="color: #000000;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row mt-4 row-main">
-        <div class="col-lg-5 col-md-5 col-sm-12 text-center">
+        <div class="col-lg-5 col-md-5 col-sm-12 text-center vertical-center">
             <img class="img img-fluid w-100" src="../../../assets/images/logos/logo 1.png" alt="">
         </div>
         <div class="col-lg-7 col-md-7 col-sm-12 text-center p-3">
-            <h1 class="display-1">Bienvenid@</h1>
+            <h1 class="display-1 mb-5">Bienvenid@</h1>
             <div class="vertical-center h-75 ">
                 <h4>Wabi Sabi, es una marca que se distingue por ofrecer piezas en arcilla, tales
                     como floreros, ceniceros, joyeros o
@@ -65,8 +83,10 @@
         <div class="col-lg-7 col-md-7 col-sm-12 text-center p-3">
             <h1 class="display-5">¿Como puedes adquirir lo que quieres?</h1>
             <p class="h5">1. Escoge el tipo de producto que quieres (Joyero, Porta incienso, etc).</p>
-            <p class="h5">2. Elige el diseño que quieres (puedes elegir uno del catalogo o pedir un diseño personalizado).</p>
-            <p class="h5">3. Escribenos en cualquiera de nuestras redes sociales especificando la informacion anterior.</p>
+            <p class="h5">2. Elige el diseño que quieres (puedes elegir uno del catalogo o pedir un diseño
+                personalizado).</p>
+            <p class="h5">3. Escribenos en cualquiera de nuestras redes sociales especificando la informacion anterior.
+            </p>
             <p class="h5">4. Regalanos tus datos y realiza el pago por diferentes medios como nequi o daviplata.</p>
             <p class="h5">5. Listo, tu pedido será entregado en la puerta de tu casa.</p>
         </div>
@@ -88,14 +108,40 @@
         </div>
     </div>
     <div class="row-main">
-        <div class="row row-main visibleMobile scroll-container">
-            <div class="card m-3" *ngFor="let product of product_list">
-                <div class="card-details text-center">
-                    <img class="img w-100 h-100" src="{{product.imagen}}" alt="">
+        <div class="row row-main visibleMobile m-3">
+            <div class="slider">
+                <div class="slide-track">
+                    <div class="slide p-3" *ngFor="let product of products">
+                        <div class="card ">
+                            <div class="card-details text-center">
+                                <img class="img img-fluid w-80" src="{{product.imagen}}" alt="">
+                            </div>
+                            <button class="card-button" (click)="openDialog(product.id)">Detalles</button>
+                        </div>
+                    </div>
                 </div>
-                <button class="card-button" (click)="openDialog(product.id)">Detalles</button>
             </div>
         </div>
+    </div>
+    <div class="row row-main visibleMobile">
+        <div class="slider-container">
+            <div class="slider">
+              <div class="slider-item text-center" *ngFor="let product of products">
+                <div class="card ">
+                    <div class="card-details text-center">
+                        <img class="img img-fluid w-80" src="{{product.imagen}}" alt="">
+                    </div>
+                    <button class="card-button" (click)="openDialog(product.id)">Detalles</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="slider-controls">
+            <button (click)="prevSlide()">&#9665;</button>
+            <button (click)="nextSlide()">&#9655;</button>
+          </div>
+          
     </div>
     <div class="row row-main mb-4 mt-4 p-2">
         <h1 class="lead text-center">

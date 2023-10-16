@@ -1,13 +1,12 @@
-<div class="container p-4"  *ngIf="product">
+<div class="container p-4">
     <div class="row text-center">
-        <h1 class="text-title"><strong>informacion</strong></h1>
+        <h1 class="text-title"><strong>Informacion</strong></h1>
     </div>
     <div class="row pb-2"><img src="{{product.imagen}}" alt="" class="img img-fluid"></div>
     <div class="row pb-2"><p><strong>Descripcion:</strong> {{ product.descripcion }}</p></div>
     <div class="row pb-2"><p><strong>Precio:</strong> {{ product.precio }}</p></div>
     <div class="row text-center">
-        <div class="col-12">
-            <button class="btn btn-primary">Solicitar</button>
-        </div>
+        <a [attr.href]="'https://api.whatsapp.com/send?phone=573053074733&text=' + encodeText('Hola Lu, estoy interesado en el ' + product.descripcion)" target="_blank" class="btn btn-primary">Solicitar</a>
+        <button class="btn btn-danger mt-3" (click)="borrarProducto(product.id)" *ngIf="sesion">Eliminar</button>
     </div>
 </div>
