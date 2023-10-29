@@ -19,6 +19,7 @@ export class ProductDetailComponent {
   }
 
   ngOnInit(): void {
+
     this.http.get<any[]>('https://wabisabi-server-production.up.railway.app/archivos/productos/').subscribe(
       (response) => {
         this.list = response; // Almacena la lista de productos en la propiedad
@@ -48,4 +49,34 @@ export class ProductDetailComponent {
       });
 
   }
+  editarProducto(productoId: number){
+    const url = `https://wabisabi-server-production.up.railway.app/archivos/actualizar-producto/${productoId}/`;
+    let descripcion = ''
+    let precio = ''
+    const inputElement = document.getElementById('descripcion') as HTMLInputElement;
+    if(inputElement){
+      descripcion = inputElement.value
+    }
+    const inputElement2 = document.getElementById('precio') as HTMLInputElement;
+    if(inputElement2){
+      precio = inputElement2.value
+    }
+    const data = {
+      descripcion: descripcion,
+      precio: precio,
+    };
+    console.log(data)
+    this.http
+      .put(url,data)
+      .toPromise()
+      .then(() => {
+        Swal.fire("Actualizado...", "El producto ha sido modifico correctamente", "success").then(() => {
+          window.location.reload();
+        });
+      })
+      .catch(error => {
+        Swal.fire("Error...", "Ocurrió un error al actualizar el producto", "error");
+      });
+  }
+
 }
