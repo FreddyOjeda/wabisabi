@@ -19,7 +19,9 @@ export class ProductFormComponent {
   imageData: string | ArrayBuffer | null | undefined = null;
   image: any
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    console.log(localStorage.getItem('sesion'));
+  }
 
   onImageSelected(event: any) {
     const inputElement = event.target as HTMLInputElement;

@@ -1,6 +1,7 @@
 import { Component, Input, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,7 @@ export class ProductDetailComponent {
 
   sesion: boolean = false
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
     this.sesion = localStorage.getItem('sesion') === 'true'
   }
 
@@ -65,13 +66,12 @@ export class ProductDetailComponent {
       descripcion: descripcion,
       precio: precio,
     };
-    console.log(data)
     this.http
       .put(url,data)
       .toPromise()
       .then(() => {
         Swal.fire("Actualizado...", "El producto ha sido modifico correctamente", "success").then(() => {
-          window.location.reload();
+          Swal.close()
         });
       })
       .catch(error => {

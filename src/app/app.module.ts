@@ -15,6 +15,9 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ProductComponent } from './components/product/product.component';
 
+import { AuthModule } from '@auth0/auth0-angular';
+import { RedirectComponent } from './components/redirect/redirect.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,8 @@ import { ProductComponent } from './components/product/product.component';
     ProfileComponent,
     ProductDetailComponent,
     ProductFormComponent,
-    ProductComponent
+    ProductComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,13 @@ import { ProductComponent } from './components/product/product.component';
     HttpClientModule,
     //MatDialogModule,
     BrowserAnimationsModule,
+    AuthModule.forRoot({
+      domain:"dev-6p2l1x64ky7vhlno.us.auth0.com",
+      clientId:"hiKsc2GhEQNbimu0r2TYNoKG7wooAyn6",
+      authorizationParams:{
+        redirect_uri:window.location.origin+'/redirect'
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

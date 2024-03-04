@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,9 @@ import Swal from 'sweetalert2';
 })
 export class ProfileComponent {
 
-
+  constructor(
+    private auth: AuthService
+  ){}
 
   ingresar() {
     // Accede a los valores de los campos de entrada
@@ -34,5 +37,9 @@ export class ProfileComponent {
       // Los datos no son válidos, muestra un mensaje de error o realiza la acción correspondiente
       Swal.fire("Ups!!!", "Los datos no coinciden", "error");
     }
+  }
+
+  passKeyLogIn(){
+    this.auth.loginWithRedirect()
   }
 }

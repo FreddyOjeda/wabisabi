@@ -6,6 +6,8 @@ import { ProfileComponent } from '../profile/profile.component';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { DataSharingService } from 'src/app/services/DataSharing.service';
+
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,16 @@ export class HomeComponent implements OnInit {
   products: any[] = [];
   sesion: boolean = false
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {
+  constructor(
+    private http: HttpClient, 
+    private modalService: NgbModal,
+    private dataService: DataSharingService,
+  ) {
+    this.dataService.data$.subscribe(data => {
+      if(data){
+        localStorage.setItem('sesion', 'true');
+      }
+    })
     this.sesion = localStorage.getItem('sesion') === 'true'
   }
 
@@ -39,19 +50,19 @@ export class HomeComponent implements OnInit {
       (result) => {
         window.location.reload();
         // Esta función se ejecutará cuando se cierre el modal
-        console.log('Modal cerrado con resultado:', result);
 
         // Recarga la página
       },
       (reason) => {
-        // Esta función se ejecutará si se cierra el modal de otra manera (por ejemplo, haciendo clic fuera del modal)
         window.location.reload();
-        console.log('Modal cerrado debido a:', reason);
+        // Esta función se ejecutará si se cierra el modal de otra manera (por ejemplo, haciendo clic fuera del modal)
+        //window.location.reload();
       }
     );
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    
     // Realiza una solicitud GET al endpoint de obtener productos en Django
     this.http.get<any[]>('https://wabisabi-server-production.up.railway.app/archivos/productos/').subscribe(
       (response) => {
@@ -64,6 +75,7 @@ export class HomeComponent implements OnInit {
   }
   cerrarSesion() {
     localStorage.setItem('sesion', 'false')
+    this.dataService.sendData(false)
     window.location.reload();
   }
 
@@ -82,12 +94,12 @@ export class HomeComponent implements OnInit {
   }
 
   prevSlide() {
-    this.currentIndex=this.currentIndex-2;
+    this.currentIndex = this.currentIndex - 2;
     this.showSlide(this.currentIndex);
   }
 
   nextSlide() {
-    this.currentIndex=this.currentIndex+2;
+    this.currentIndex = this.currentIndex + 2;
     this.showSlide(this.currentIndex);
   }
 
